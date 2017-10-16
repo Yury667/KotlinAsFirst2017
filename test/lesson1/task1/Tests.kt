@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test
 class Tests {
     @Test
     @Tag("Example")
-    fun sqr() {
+   fun sqr() {
         assertEquals(0.0, sqr(0.0), 1e-5)
         assertEquals(4.0, sqr(2.0), 1e-5)
         assertEquals(9.0, sqr(-3.0), 1e-5)
@@ -68,7 +68,7 @@ class Tests {
 
     @Test
     @Tag("Easy")
-    fun thirdDigit() {
+    fun thirdDigit()  {
         assertEquals(8, thirdDigit(3801))
         assertEquals(1, thirdDigit(100))
         assertEquals(0, thirdDigit(1000))
