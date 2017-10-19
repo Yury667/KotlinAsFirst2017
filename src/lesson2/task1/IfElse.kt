@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson2.task1
 
 import lesson1.task1.discriminant
@@ -45,6 +46,7 @@ fun ageDescription(age: Int): String {
         else -> "$age лет"
     }
 }
+
 /**
  * Простая
  *
@@ -52,13 +54,14 @@ fun ageDescription(age: Int): String {
  * и t3 часов — со скоростью v3 км/час.
  * Определить, за какое время он одолел первую половину пути?
  */
-fun timeForHalfWay(t1: Double, v1: Double,
-                   t2: Double, v2: Double,
-                   t3: Double, v3: Double): Double {
+fun timeForHalfWay(t1: Double, v1: Double, t2: Double, v2: Double, t3: Double, v3: Double): Double {
     val s = (t1 * v1 + t2 * v2 + t3 * v3) / 2
-    if (t1 * v1 >= s) return (s / v1)
-    else if ((t1 * v1 + t2 * v2) >= s) return (t1 + (s - t1 * v1) / v2)
-    else return (t1 + t2 + (s - t1 * v1 - t2 * v2) / v3) }
+    return when {
+        t1 * v1 >= s -> s / v1
+        t1 * v1 + t2 * v2 >= s -> t1 + (s - t1 * v1) / v2
+        else -> t1 + t2 + (s - t1 * v1 - t2 * v2) / v3
+    }
+}
 
 /**
  * Простая
@@ -69,14 +72,12 @@ fun timeForHalfWay(t1: Double, v1: Double,
  * и 3, если угроза от обеих ладей.
  * Считать, что ладьи не могут загораживать друг друга
  */
-fun whichRookThreatens(kingX: Int, kingY: Int,
-                       rookX1: Int, rookY1: Int,
-                       rookX2: Int, rookY2: Int): Int {
+fun whichRookThreatens(kingX: Int, kingY: Int, rookX1: Int, rookY1: Int, rookX2: Int, rookY2: Int): Int {
     return when {
-        (kingX != rookX1) && (kingX != rookX2) && (kingY != rookY1) && (kingY != rookY2) -> 0
-        ((kingX == rookX1) || (kingY == rookY1)) && (kingX != rookX2) && (kingY != rookY2) -> 1
-        ((kingX == rookX2) || (kingY == rookY2)) && (kingX != rookX1) && (kingY != rookY1) -> 2
-    else -> 3
+        ((kingX == rookX1) || (kingY == rookY1)) && ((kingX == rookX2) || (kingY == rookY2)) -> 3
+        (kingX == rookX2) || (kingY == rookY2) -> 2
+        (kingX == rookX1) || (kingY == rookY1) -> 1
+        else -> 0
     }
 }
 
@@ -90,53 +91,51 @@ fun whichRookThreatens(kingX: Int, kingY: Int,
  * и 3, если угроза есть и от ладьи и от слона.
  * Считать, что ладья и слон не могут загораживать друг друга.
  */
-fun rookOrBishopThreatens(kingX: Int, kingY: Int,
-                          rookX: Int, rookY: Int,
-                          bishopX: Int, bishopY: Int): Int {
+fun rookOrBishopThreatens(kingX: Int, kingY: Int, rookX: Int, rookY: Int, bishopX: Int, bishopY: Int): Int {
     return when {
-        (kingX != rookX) && (abs(kingX - bishopX) != abs(kingY - bishopY)) && (kingY != rookY) -> 0
-        ((kingX == rookX) || (kingY == rookY)) && (abs(kingX - bishopX) != abs(kingY - bishopY)) -> 1
-        (kingX != rookX) && (kingY != rookY) && (abs(kingX - bishopX) == abs(kingY - bishopY)) -> 2
-        else -> 3
+        (abs(bishopY - kingY) == abs(bishopX - kingX)) && ((kingY == rookY) || (kingX == rookX)) -> 3
+        abs(bishopY - kingY) == abs(bishopX - kingX) -> 2
+        (kingY == rookY) || (kingX == rookX) -> 1
+        else -> 0
     }
 }
 
-    /**
-     * Простая
-     *
-     * Треугольник задан длинами своих сторон a, b, c.
-     * Проверить, является ли данный треугольник остроугольным (вернуть 0),
-     * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
-     * Если такой треугольник не существует, вернуть -1.
-     */
-    fun triangleKind(a: Double, b: Double, c: Double): Int {
-        val max = maxOf(a, b, c)
-        val min = minOf(a, b, c)
-        val mid = a + b + c - max - min
-        val max2 = sqr(min) + sqr(mid)
-        return when {
-            max >= (min + mid) -> -1
-            sqr(max) < max2 -> 0
-            sqr(max) == max2 -> 1
-            else -> 2
-        }
+/**
+ * Простая
+ *
+ * Треугольник задан длинами своих сторон a, b, c.
+ * Проверить, является ли данный треугольник остроугольным (вернуть 0),
+ * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
+ * Если такой треугольник не существует, вернуть -1.
+ */
+fun triangleKind(a: Double, b: Double, c: Double): Int {
+    val max = maxOf(a, b, c)
+    val min = minOf(a, b, c)
+    val mid = a + b + c - max - min
+    val max2 = sqr(min) + sqr(mid)
+    return when {
+        max >= (min + mid) -> -1
+        sqr(max) < max2 -> 0
+        sqr(max) == max2 -> 1
+        else -> 2
     }
+}
 
 
-    /**
-     * Средняя
-     *
-     * Даны четыре точки на одной прямой: A, B, C и D.
-     * Координаты точек a, b, c, d соответственно, b >= a, d >= c.
-     * Найти длину пересечения отрезков AB и CD.
-     * Если пересечения нет, вернуть -1.
-     */
-    fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
-        return when {
-            (c > b) || (a > d) -> -1
-            (c >= a) && (b >= c) && (d >= b) -> b - c
-            (a >= c) && (d >= a) && (b >= d) -> d - a
-            (a > c) && (d > b) -> b - a
+/**
+ * Средняя
+ *
+ * Даны четыре точки на одной прямой: A, B, C и D.
+ * Координаты точек a, b, c, d соответственно, b >= a, d >= c.
+ * Найти длину пересечения отрезков AB и CD.
+ * Если пересечения нет, вернуть -1.
+ */
+fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
+    return when {
+        (c > b) || (a > d) -> -1
+        (c >= a) && (b >= c) && (d >= b) -> b - c
+        (a >= c) && (d >= a) && (b >= d) -> d - a
+        (a > c) && (d > b) -> b - a
         else -> d - c
     }
 }
