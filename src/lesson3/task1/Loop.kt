@@ -155,7 +155,7 @@ return max == maxOf(m, n)
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
     var x = 0
-    for (i in m..n) {
+    for (i in sqrt((m).toDouble()).toInt()..sqrt((n).toDouble()).toInt()) {
         var I = i.toDouble()
         if (sqr(I) in (m..n))
         x = x + 1
