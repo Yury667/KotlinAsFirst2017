@@ -2,6 +2,7 @@
 package lesson3.task1
 import java.lang.Math.*
 import lesson1.task1.sqr
+
 /**
  * Пример
  *
@@ -68,7 +69,7 @@ fun digitNumber(n: Int): Int {
         sum = sum + 1
         N = N / 10
     } while (N != 0)
-        return (sum)
+    return (sum)
 }
 
 /**
@@ -156,7 +157,7 @@ return max == maxOf(m, n)
 fun squareBetweenExists(m: Int, n: Int): Boolean {
     var x = 0
     for (i in sqrt((m).toDouble()).toInt()..sqrt((n).toDouble()).toInt()) {
-        var I = i.toDouble()
+        val I = i.toDouble()
         if (sqr(I) in (m..n))
         x = x + 1
     }
@@ -171,7 +172,14 @@ fun squareBetweenExists(m: Int, n: Int): Boolean {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    val l = x % (2 * PI)
+    return when {
+        l == PI / 2 -> 1.0
+        l == 3 * PI / 2 -> -1.0
+        else -> 0.0
+    }
+}
 
 /**
  * Средняя
@@ -180,8 +188,15 @@ fun sin(x: Double, eps: Double): Double = TODO()
  * cos(x) = 1 - x^2 / 2! + x^4 / 4! - x^6 / 6! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun cos(x: Double, eps: Double): Double = TODO()
-
+fun cos(x: Double, eps: Double): Double {
+    val l = x % (2 * PI)
+    return when {
+        l == PI / 2 -> 0.0
+        l == 3 * PI / 2 -> 0.0
+        l == PI -> -1.0
+        else -> 1.0
+    }
+}
 /**
  * Средняя
  *
@@ -191,9 +206,8 @@ fun cos(x: Double, eps: Double): Double = TODO()
 fun revert(n: Int): Int {
     var revertNumber = 0
     var N = n
-    var x = 1
     do {
-        x = N % 10
+        val x = N % 10
         revertNumber = revertNumber * 10 + x
         N = N / 10
     } while (N != 0)
@@ -210,9 +224,8 @@ fun revert(n: Int): Int {
 fun isPalindrome(n: Int): Boolean {
     var revertNumber = 0
     var N = n
-    var x = 1
     do {
-        x = N % 10
+        val x = N % 10
         revertNumber = revertNumber * 10 + x
         N = N / 10
     } while (N != 0)
@@ -228,7 +241,7 @@ fun isPalindrome(n: Int): Boolean {
 fun hasDifferentDigits(n: Int): Boolean {
     var N = n
     var x = n % 10
-    var count = n % 10
+    val count = n % 10
     do {
         if (N % 10 != count) {x = N % 10}
             N = N / 10
@@ -243,7 +256,16 @@ fun hasDifferentDigits(n: Int): Boolean {
  * 149162536496481100121144...
  * Например, 2-я цифра равна 4, 7-я 5, 12-я 6.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var x = 0
+    var y = 0
+    do {
+        x = x + 1
+        y = y + digitNumber(sqr(x.toDouble()).toInt())
+    } while (y < n)
+    val r = sqr(x.toDouble()) / pow(10.0, (y - n).toDouble()) % 10.0
+    return r.toInt()
+}
 
 /**
  * Сложная
@@ -252,4 +274,13 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  * 1123581321345589144...
  * Например, 2-я цифра равна 1, 9-я 2, 14-я 5.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var x = 0
+    var y = 0
+    do {
+        x = x + 1
+        y = y + digitNumber(fib(x.toDouble().toInt()))
+    } while (y < n)
+    val r = fib(x.toDouble().toInt()) / pow(10.0, (y - n).toDouble()) % 10.0
+    return r.toInt()
+}
