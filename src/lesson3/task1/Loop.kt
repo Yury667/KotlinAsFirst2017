@@ -3,6 +3,8 @@ package lesson3.task1
 import java.lang.Math.*
 import lesson1.task1.sqr
 
+
+
 /**
  * Пример
  *
@@ -154,8 +156,8 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  * Например, для интервала 21..28 21 <= 5*5 <= 28, а для интервала 51..61 квадрата не существует.
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
-    for (i in sqrt((m).toDouble()).toInt()..sqrt((n).toDouble()).toInt()) {
-        if (sqr(i.toDouble()) in (m..n)) return true
+    for (i in sqrt(m.toDouble()).toInt()..sqrt(n.toDouble()).toInt()) {
+        if (sqr2(i) in m..n) return true
     }
     return false
 }
@@ -177,7 +179,7 @@ fun sin(x: Double, eps: Double): Double {
         m += 2
         n *= -1
         result += z
-        }
+    }
     return result
 }
 
@@ -198,7 +200,7 @@ fun cos(x: Double, eps: Double): Double {
         m += 2
         n *= -1
         result += z
-        }
+    }
     return result
 }
 
@@ -244,7 +246,7 @@ fun hasDifferentDigits(n: Int): Boolean {
     do {
         if (current % 10 != count) {
             x = current % 10
-            }
+        }
         current /= 10
     } while (current != 0)
     return x != count
@@ -262,10 +264,13 @@ fun squareSequenceDigit(n: Int): Int {
     var y = 0
     do {
         x++
-        y += digitNumber(x * x)
+        y += digitNumber(sqr2(x))
     } while (y < n)
-    val r = x * x / pow(10.0, (y - n).toDouble()) % 10
-    return r.toInt()
+    var r = sqr2(x)
+    for (i in 1..y - n) {
+        r /= 10
+    }
+    return r % 10
 }
 
     /**
@@ -278,12 +283,17 @@ fun squareSequenceDigit(n: Int): Int {
 fun fibSequenceDigit(n: Int): Int {
     var x = 0
     var y = 0
-     do {
-         x++
-         y += digitNumber(fib(x))
-     } while (y < n)
-     val r = fib(x) / pow(10.0, (y - n).toDouble()) % 10
-     return r.toInt()
+    do {
+        x++
+        y += digitNumber(fib(x))
+    } while (y < n)
+    var r = fib(x)
+    for (i in 1..y - n) {
+        r /= 10
+    }
+    return r % 10
 }
+
+fun sqr2(n: Int) = n * n
 
 
