@@ -157,7 +157,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  */
 fun squareBetweenExists(m: Int, n: Int): Boolean {
     for (i in sqrt(m.toDouble()).toInt()..sqrt(n.toDouble()).toInt()) {
-        if (sqr2(i) in m..n) return true
+        if (sqr(i) in m..n) return true
     }
     return false
 }
@@ -264,9 +264,9 @@ fun squareSequenceDigit(n: Int): Int {
     var y = 0
     do {
         x++
-        y += digitNumber(sqr2(x))
+        y += digitNumber(sqr(x))
     } while (y < n)
-    var r = sqr2(x)
+    var r = sqr(x)
     for (i in 1..y - n) {
         r /= 10
     }
@@ -294,6 +294,6 @@ fun fibSequenceDigit(n: Int): Int {
     return r % 10
 }
 
-fun sqr2(n: Int) = n * n
+fun sqr(n: Int) = n * n
 
 
