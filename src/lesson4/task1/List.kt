@@ -383,7 +383,7 @@ fun russian(n: Int): String {
         }
         else {
             result += dozensLetter[dozenThousands] +
-                    unitsLetter[thousands + 10] + hundredsWord[3]
+                    unitsLetter[thousands] + hundredsWord[3]
         }
     }
     else {
