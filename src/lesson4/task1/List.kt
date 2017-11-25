@@ -342,7 +342,62 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun russian(n: Int): String {
+    var result = " "
+    val units = n % 10
+    val dozens = n / 10 % 10
+    val hundreds = n / 100 % 10
+    val thousands = n / 1000 % 10
+    val dozenThousands = n / 10000 % 10
+    val hundredThousands = n / 100000
+    val dozensUnitLetter = listOf("", "одиннадцать ", "двенадцать ", "тринадцать ",
+            "четырнадцать ", "пятнадцать ", "шестндцать ", "семнадцать ",
+            "восемнадцать ", "девятнадцать ")
+    val unitsLetter = listOf("", "один ", "два ", "три ", "четыре ", "пять ", "шесть ",
+            "семь ", "весемь ", "девять ", "одна ", "две ")
+    val dozensLetter = listOf("", "десять ", "двадцать ", "тридцать ", "сорок ", "пятдесят ",
+            "шестьдесят ", "семьдесят ", "восемьдесят ", "девяносто ")
+    val hundredsLetter = listOf("", "сто ", "двести ", "триста ", "четыреста ", "пятьсот ",
+            "шестьсот ", "семьсот ", "восемьсот ", "девятьсот ")
+    val hundredsWord = listOf("", "тысяча ", "тысячи ", "тысяч ")
+    result += hundredsLetter[hundredThousands]
+    if (dozenThousands == 1 && thousands > 0) {
+        result += dozensUnitLetter[thousands] + hundredsWord[3]
+    }
+    else if (hundredThousands > 0 || dozenThousands > 0 || thousands > 0) {
+        if (thousands == 1) {
+            result += dozensLetter[dozenThousands] +
+                    unitsLetter[thousands + 9] + hundredsWord[1]
+        }
+        else if (thousands == 2) {
+            result += dozensLetter[dozenThousands] +
+                    unitsLetter[thousands + 9] + hundredsWord[2]
+        }
+        else if (thousands == 3) {
+            result += dozensLetter[dozenThousands] +
+                    unitsLetter[thousands] + hundredsWord[2]
+        }
+         else if (thousands == 4) {
+            result += dozensLetter[dozenThousands] +
+                    unitsLetter[thousands] + hundredsWord[2]
+        }
+        else {
+            result += dozensLetter[dozenThousands] +
+                    unitsLetter[thousands + 10] + hundredsWord[3]
+        }
+    }
+    else {
+        result = ""
+    }
+    result += hundredsLetter[hundreds]
+    if (dozens == 1 && units > 0) {
+        result += dozensUnitLetter[units]
+    }
+    else {
+        result += dozensLetter[dozens] + unitsLetter[units]
+    }
+    return result.trim()
+}
 
 
 
