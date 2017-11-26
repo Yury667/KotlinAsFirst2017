@@ -84,7 +84,7 @@ fun dateStrToDigit(str: String): String {
         "декабря" -> "12"
         else -> return ""
     }
-    return String.format("%02d.%d.%d", date[0].toInt(), month, date[2].toInt())
+    return String.format("%02d.%s.%s", date[0].toInt(), month, date[2].toInt())
 }
 
 /**
@@ -112,7 +112,7 @@ fun dateDigitToStr(digital: String): String {
         "12" -> "декабря"
         else -> return ""
     }
-    return String.format("%d %s %d", date[0].toInt(), month, date[2].toInt())
+    return String.format("%d %s %s", date[0].toInt(), month, date[2].toInt())
 }
 
 /**
