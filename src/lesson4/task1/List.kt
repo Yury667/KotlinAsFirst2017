@@ -343,60 +343,60 @@ fun roman(n: Int): String {
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
 fun russian(n: Int): String {
-    var result = " "
+    var result = StringBuilder()
     val units = n % 10
     val dozens = n / 10 % 10
     val hundreds = n / 100 % 10
     val thousands = n / 1000 % 10
     val dozenThousands = n / 10000 % 10
     val hundredThousands = n / 100000
-    val dozensUnitLetter = listOf("", "одиннадцать ", "двенадцать ", "тринадцать ",
-            "четырнадцать ", "пятнадцать ", "шестндцать ", "семнадцать ",
-            "восемнадцать ", "девятнадцать ")
-    val unitsLetter = listOf("", "один ", "два ", "три ", "четыре ", "пять ", "шесть ",
-            "семь ", "весемь ", "девять ", "одна ", "две ")
-    val dozensLetter = listOf("", "десять ", "двадцать ", "тридцать ", "сорок ", "пятдесят ",
-            "шестьдесят ", "семьдесят ", "восемьдесят ", "девяносто ")
-    val hundredsLetter = listOf("", "сто ", "двести ", "триста ", "четыреста ", "пятьсот ",
-            "шестьсот ", "семьсот ", "восемьсот ", "девятьсот ")
-    val hundredsWord = listOf("", "тысяча ", "тысячи ", "тысяч ")
-    result += hundredsLetter[hundredThousands]
+    val dozensUnitLetter = listOf("", " одиннадцать", " двенадцать", " тринадцать",
+            " четырнадцать", " пятнадцать", " шестнадцать", " семнадцать",
+            " восемнадцать", " девятнадцать")
+    val unitsLetter = listOf("", " один", " два", " три", " четыре", " пять", " шесть",
+            " семь", " восемь", " девять", " одна", " две")
+    val dozensLetter = listOf("", " десять", " двадцать", " тридцать", " сорок", " пятдесят",
+            " шестьдесят", " семьдесят", " восемьдесят", " девяносто")
+    val hundredsLetter = listOf("", " сто", " двести", " триста", " четыреста", " пятьсот",
+            " шестьсот", " семьсот", " восемьсот", " девятьсот")
+    val hundredsWord = listOf("", " тысяча", " тысячи", " тысяч")
+    result.append(hundredsLetter[hundredThousands])
     if (dozenThousands == 1 && thousands > 0) {
-        result += dozensUnitLetter[thousands] + hundredsWord[3]
+        result.append(dozensUnitLetter[thousands] + hundredsWord[3])
     }
     else if (hundredThousands > 0 || dozenThousands > 0 || thousands > 0) {
         if (thousands == 1) {
-            result += dozensLetter[dozenThousands] +
-                    unitsLetter[thousands + 9] + hundredsWord[1]
+            result.append(dozensLetter[dozenThousands] +
+                    unitsLetter[thousands + 9] + hundredsWord[1])
         }
         else if (thousands == 2) {
-            result += dozensLetter[dozenThousands] +
-                    unitsLetter[thousands + 9] + hundredsWord[2]
+            result.append(dozensLetter[dozenThousands] +
+                    unitsLetter[thousands + 9] + hundredsWord[2])
         }
         else if (thousands == 3) {
-            result += dozensLetter[dozenThousands] +
-                    unitsLetter[thousands] + hundredsWord[2]
+            result.append(dozensLetter[dozenThousands] +
+                    unitsLetter[thousands] + hundredsWord[2])
         }
          else if (thousands == 4) {
-            result += dozensLetter[dozenThousands] +
-                    unitsLetter[thousands] + hundredsWord[2]
+            result.append(dozensLetter[dozenThousands] +
+                    unitsLetter[thousands] + hundredsWord[2])
         }
         else {
-            result += dozensLetter[dozenThousands] +
-                    unitsLetter[thousands] + hundredsWord[3]
+            result.append(dozensLetter[dozenThousands] +
+                    unitsLetter[thousands] + hundredsWord[3])
         }
     }
     else {
-        result = ""
+        result = StringBuilder()
     }
-    result += hundredsLetter[hundreds]
+    result.append(hundredsLetter[hundreds])
     if (dozens == 1 && units > 0) {
-        result += dozensUnitLetter[units]
+        result.append(dozensUnitLetter[units])
     }
     else {
-        result += dozensLetter[dozens] + unitsLetter[units]
+        result.append(dozensLetter[dozens] + unitsLetter[units])
     }
-    return result.trim()
+    return result.trim().toString()
 }
 
 
