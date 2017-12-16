@@ -149,19 +149,21 @@ fun flattenPhoneNumber(phone: String): String {
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
 fun bestLongJump(jumps: String): Int {
-    val format = Regex("""[%\d\s-]*""")
+    val format = Regex("""[%\-\d\s]*""")
     if (!format.matches(jumps)) {
         return -1
     }
-    val x = Regex("""[%-]""").replace(jumps, "")
+    val x = Regex("""[%|-]""").replace(jumps, "")
     val numbers = Regex("""[\d]""")
     if (!x.contains(numbers)) {
         return -1
     }
-    val y = Regex("""[\s]""").split(x).toMutableList()
-    return y.max()!!.toInt()
- 
-
+    val y = Regex("""[\s+]""").split(x).toMutableList()
+    val result = mutableListOf(0)
+    for (i in y) {
+        if (i != "") result.add(i.toInt())
+    }
+    return result.max()!!
 }
 
 /**
@@ -203,22 +205,21 @@ fun bestHighJump(jumps: String): Int {
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
 fun plusMinus(expression: String): Int {
-    val format = Regex("""\\d+([+-]\\d+)*""")
+    val format = Regex("""^(\d+)(\s+(\+|-)\s+(\d+))*$""")
     if (!format.matches(expression)) {
-        val parts = expression.split(" ")
-        var result = parts[0].toInt()
-            for (i in 2 until parts.size step 2) {
-                if (parts[i - 1] == "+") {
-                    result += parts[i].toInt()
-                } else {
-                    result -= parts[i].toInt()
-                }
+        throw IllegalArgumentException("for input string \"$expression\"")
+    }
+    val parts = expression.split(" ")
+    var result = parts[0].toInt()
+        for (i in 2 until parts.size step 2) {
+            if (parts[i - 1] == "+") {
+                result += parts[i].toInt()
+            } else {
+                result -= parts[i].toInt()
             }
+        }
         return result
-    }
-    else {
-        throw IllegalArgumentException()
-    }
+
 }
 
 /**
