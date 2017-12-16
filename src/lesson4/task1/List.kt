@@ -170,11 +170,14 @@ fun times(a: List<Double>, b: List<Double>): Double {
  * Значение пустого многочлена равно 0.0 при любом x.
  */
 fun polynom(p: List<Double>, x: Double): Double {
-    var result = 0.0
-    var power = 0.0
-    for (i in 0 until p.size) {
-        result += p[i] * pow(x, power)
-        power++
+    if (p.isEmpty()) {
+        return 0.0
+    }
+    var result = p[0]
+    var power = x
+    for (i in 1 until p.size) {
+        result += p[i] * power
+        power *= x
     }
     return result
 }
@@ -245,9 +248,7 @@ fun convert(n: Int, base: Int): List<Int> {
         list.add(m % base)
         m /= base
     }
-    if (m > 0) {
-        list.add(m)
-    }
+    list.add(m)
     return list.reversed()
 }
 
@@ -281,10 +282,11 @@ fun convertToString(n: Int, base: Int): String {
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
 fun decimal(digits: List<Int>, base: Int): Int {
-    var list = 0
-    for (i in 0..digits.size - 1) {
-        val power = digits.size - i - 1.0
-        list += pow(base.toDouble(), power).toInt() * digits[i]
+    var power = pow(base.toDouble(), digits.size - 1.0).toInt()
+    var list = power * digits[0]
+    for (i in 1..digits.size - 1) {
+        power /= base.toDouble().toInt()
+        list += power * digits[i]
     }
     return list
 }
@@ -300,12 +302,12 @@ fun decimal(digits: List<Int>, base: Int): Int {
  */
 fun decimalFromString(str: String, base: Int): Int {
     val list = mutableListOf<Int>()
-    for (i in 0 until str.length) {
-        if (str[i] in 'a'..'z') {
-            list.add(str[i] - 'a' + 10)
+    for (element in str) {
+        if (element in 'a'..'z') {
+            list.add(element - 'a' + 10)
         }
         else {
-            list.add(str[i].toString().toInt())
+            list.add(element.toString().toInt())
         }
     }
     return decimal(list, base)
