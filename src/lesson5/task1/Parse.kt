@@ -160,7 +160,7 @@ fun bestLongJump(jumps: String): Int {
     }
     val y = Regex("""[\s]""").split(x).toMutableList()
     return y.max()!!.toInt()
-
+ 
 
 }
 
