@@ -129,7 +129,7 @@ fun dateDigitToStr(digital: String): String {
  */
 fun flattenPhoneNumber(phone: String): String {
     val result = Regex("""[()\s-]""").replace(phone, "")
-    val format = Regex("""^(\+\d+)?(\([\d]+\))?([\d]+)""")
+    val format = Regex("""^(\+\d+)?([\d]+)""")
     if (format.matches(result)) {
         return result
     }
@@ -181,14 +181,14 @@ fun bestHighJump(jumps: String): Int {
     if (!format.matches(jumps)) {
         return -1
     }
-    val result = mutableListOf(0)
+    val result = mutableListOf<Int>()
     val parts = jumps.split(" ")
     for (i in 0 until parts.size - 1) {
         if (parts[i + 1].contains("+")) {
             result.add(parts[i].toInt())
         }
     }
-    if (result == mutableListOf(0)) {
+    if (result.isEmpty()) {
         return -1
     }
     return result.max()!!
@@ -211,14 +211,14 @@ fun plusMinus(expression: String): Int {
     }
     val parts = expression.split(" ")
     var result = parts[0].toInt()
-        for (i in 2 until parts.size step 2) {
-            if (parts[i - 1] == "+") {
-                result += parts[i].toInt()
-            } else {
-                result -= parts[i].toInt()
-            }
+    for (i in 2 until parts.size step 2) {
+        if (parts[i - 1] == "+") {
+            result += parts[i].toInt()
+        } else {
+            result -= parts[i].toInt()
         }
-        return result
+    }
+    return result
 
 }
 
@@ -233,9 +233,9 @@ fun plusMinus(expression: String): Int {
  */
 fun firstDuplicateIndex(str: String): Int {
     var result = 0
-    val parts = str.split(" ")
+    val parts = str.toLowerCase().split(" ")
     for (i in 0 until parts.size - 1) {
-        if (parts[i].toLowerCase() == parts[i + 1].toLowerCase()) {
+        if (parts[i] == parts[i + 1]) {
             return result
         }
         result += parts[i].length + 1
@@ -255,7 +255,7 @@ fun firstDuplicateIndex(str: String): Int {
  * Все цены должны быть положительными
  */
 fun mostExpensive(description: String): String {
-    val format = Regex("""\\d+(\\.\\d+)?""")
+    val format = Regex("""^\\d+(\\.\\d+)?""")
     if (format.matches(description)) {
         return ""
     }

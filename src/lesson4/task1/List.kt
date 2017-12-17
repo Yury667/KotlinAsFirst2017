@@ -170,14 +170,11 @@ fun times(a: List<Double>, b: List<Double>): Double {
  * Значение пустого многочлена равно 0.0 при любом x.
  */
 fun polynom(p: List<Double>, x: Double): Double {
-    if (p.isEmpty()) {
-        return 0.0
-    }
-    var result = p[0]
-    var power = x
-    for (i in 1 until p.size) {
-        result += p[i] * power
-        power *= x
+    var result = 0.0
+    var xPower = 1.0
+    for (i in 0 until p.size) {
+        result += p[i] * xPower
+        xPower *= x
     }
     return result
 }
@@ -282,13 +279,13 @@ fun convertToString(n: Int, base: Int): String {
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
 fun decimal(digits: List<Int>, base: Int): Int {
-    var power = pow(base.toDouble(), digits.size - 1.0).toInt()
-    var list = power * digits[0]
+    var basePower = pow(base.toDouble(), digits.size - 1.0).toInt()
+    var result = basePower * digits[0]
     for (i in 1..digits.size - 1) {
-        power /= base.toDouble().toInt()
-        list += power * digits[i]
+        basePower /= base
+        result += basePower * digits[i]
     }
-    return list
+    return result
 }
 
 /**
@@ -371,17 +368,9 @@ fun russian(n: Int): String {
             result.append(dozensLetter[dozenThousands] +
                     unitsLetter[thousands + 9] + hundredsWord[1])
         }
-        else if (thousands == 2) {
+        else if (thousands in 2..4) {
             result.append(dozensLetter[dozenThousands] +
                     unitsLetter[thousands + 9] + hundredsWord[2])
-        }
-        else if (thousands == 3) {
-            result.append(dozensLetter[dozenThousands] +
-                    unitsLetter[thousands] + hundredsWord[2])
-        }
-        else if (thousands == 4) {
-            result.append(dozensLetter[dozenThousands] +
-                    unitsLetter[thousands] + hundredsWord[2])
         }
         else {
             result.append(dozensLetter[dozenThousands] +
