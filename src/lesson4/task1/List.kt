@@ -368,9 +368,13 @@ fun russian(n: Int): String {
             result.append(dozensLetter[dozenThousands] +
                     unitsLetter[thousands + 9] + hundredsWord[1])
         }
-        else if (thousands in 2..4) {
+        else if (thousands == 2) {
             result.append(dozensLetter[dozenThousands] +
                     unitsLetter[thousands + 9] + hundredsWord[2])
+        }
+        else if (thousands in 3..4) {
+            result.append(dozensLetter[dozenThousands] +
+                    unitsLetter[thousands] + hundredsWord[2])
         }
         else {
             result.append(dozensLetter[dozenThousands] +
